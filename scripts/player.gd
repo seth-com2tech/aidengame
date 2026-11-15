@@ -13,6 +13,8 @@ const SPEED: float = 500.0
 
 @onready var playeranim=$body
 @onready var gun=$body/barrel
+@onready var gunshot = $gunshot
+@onready var reloadsound = $reloadsound
 @export var hud: hudUI
 
 func _ready() -> void:
@@ -41,6 +43,7 @@ func _physics_process(delta):
 			bullet.global_position = gun.global_position
 			bullet.direction = (get_global_mouse_position()-global_position).normalized()
 			$/root/Main.add_child(bullet)
+			gunshot.play(0.13)
 			$shootdelay.start()
 			delaying = true
 			currentammo -= 1
@@ -50,6 +53,7 @@ func _physics_process(delta):
 			reloading = true
 			$reload.start()
 			hud.update_ammo_count(0, maxammo)
+			reloadsound.play()
 		move_and_slide()
 
 
