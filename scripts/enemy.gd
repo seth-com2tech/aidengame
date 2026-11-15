@@ -9,6 +9,8 @@ var speed : float
 var direction := Vector2.ZERO
 var startpos : Vector2
 
+var debugPos = Label.new()
+var debugState = Label.new()
 @export var dead = false
 @export var state = "roaming"
 
@@ -16,8 +18,8 @@ var startpos : Vector2
 @onready var nav_agent := $NavigationAgent2D
 @onready var enemy=$enemy
 @onready var hitbox=$hitbox
-@onready var debugPos=$dbgTargetPos
-@onready var debugState=$dbgState
+#@onready var debugPos=$dbgTargetPos
+#@onready var debugState=$dbgState
 
 
 
@@ -25,12 +27,19 @@ func _ready() -> void:
 	await get_tree().process_frame
 	startpos = global_position
 	state_update("roaming")
+	
+	debugPos.position = Vector2(-40,-40)
+	add_child(debugPos)
+	debugState.position = Vector2(-30,30)
+	add_child(debugState)
+	
 	if player:
 		nav_agent.target_position = player.global_position
 	
 
 func state_update(newstate):
 	state = newstate
+	
 	debugPos.text = str(nav_agent.target_position)
 	debugState.text = state
 	print(state)

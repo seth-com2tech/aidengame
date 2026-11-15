@@ -1020,7 +1020,7 @@ scale = Vector2(0.99999994, 0.99999994)
 position = Vector2(-1594, -750)
 
 [node name="enemy" parent="Enemies" unique_id=214753348 instance=ExtResource("5_vcsgt")]
-position = Vector2(1502, 1815)
+position = Vector2(1499, 1818)
 
 [node name="enemy8" parent="Enemies" unique_id=552608454 instance=ExtResource("5_vcsgt")]
 position = Vector2(3194, 1505)
