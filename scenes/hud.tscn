@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cfwnkp6h2242b"]
+
+[ext_resource type="Script" uid="uid://bfalt56pko8sf" path="res://scripts/hud.gd" id="1_ahhtf"]
+[ext_resource type="Shader" uid="uid://bmhudr8bileg3" path="res://textures/pixel.gdshader" id="2_oo0fn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ysmq"]
+shader = ExtResource("2_oo0fn")
+
+[sub_resource type="LabelSettings" id="LabelSettings_5ysmq"]
+font_size = 32
+
+[node name="HUD" type="CanvasLayer" unique_id=1925242893]
+script = ExtResource("1_ahhtf")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=672594399]
+material = SubResource("ShaderMaterial_5ysmq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=75641494]
+offset_right = 238.0
+offset_bottom = 90.0
+
+[node name="Ammo" type="Label" parent="MarginContainer" unique_id=595212110]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_5ysmq")
+horizontal_alignment = 1

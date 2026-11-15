@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://dk6mwyihf5pjn"]
+
+[ext_resource type="Texture2D" uid="uid://8uo2k0qlmgu" path="res://textures/back.png" id="1_oabld"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rvslj"]
+
+[node name="background" type="Node2D" unique_id=913069716]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=499902594]
+material = SubResource("CanvasItemMaterial_rvslj")
+texture = ExtResource("1_oabld")
