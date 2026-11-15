@@ -139,18 +139,6 @@ polygon = PackedVector2Array(17.300583, -74.18587, 47.300583, -2.1858673, 57.300
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemy/playerdetector" unique_id=1642320517]
 shape = SubResource("CircleShape2D_yf5fn")
 
-[node name="dbgTargetPos" type="Label" parent="." unique_id=553770997]
-offset_left = -26.0
-offset_top = -42.0
-offset_right = 14.0
-offset_bottom = -19.0
-
-[node name="dbgState" type="Label" parent="." unique_id=310316834]
-offset_left = -20.0
-offset_top = 19.0
-offset_right = 20.0
-offset_bottom = 42.0
-
 [connection signal="area_entered" from="hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="timeout" from="CheckTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="StuckTimer" to="." method="_on_stuck_timer_timeout"]
