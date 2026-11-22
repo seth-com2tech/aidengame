@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://ddfykugbxeali" path="res://textures/topdownpack-Sheet2.png" id="4_fjrip"]
 [ext_resource type="PackedScene" uid="uid://hi7dswjmjldp" path="res://scenes/gun_manager.tscn" id="4_tuyoq"]
 [ext_resource type="AudioStream" uid="uid://ccb28cg4fvmn1" path="res://sounds/Single Shot Reload Full MP3.mp3" id="5_qlg0r"]
+[ext_resource type="Script" uid="uid://cabefklcjgdxp" path="res://scenes/shotgun.gd" id="6_smehm"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ix85q"]
 radius = 20.0
@@ -174,6 +175,10 @@ animation = &"walkingshotgun"
 autoplay = "idle"
 
 [node name="GunManager" parent="body" unique_id=1756750752 instance=ExtResource("4_tuyoq")]
+
+[node name="shotgun" parent="body/GunManager" index="2" unique_id=366359033]
+position = Vector2(10, 0)
+script = ExtResource("6_smehm")
 
 [node name="reload" type="Timer" parent="." unique_id=415269217]
 wait_time = 2.0
