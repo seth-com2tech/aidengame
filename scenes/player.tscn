@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cfwnkp6h2242b" path="res://scenes/hud.tscn" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://dy0ds7f4a5ya7" path="res://textures/topdownpack.png" id="3_qhqgy"]
 [ext_resource type="AudioStream" uid="uid://b74mrnu2qrs1m" path="res://sounds/22LR Single Isolated MP3.mp3" id="4_dqkch"]
+[ext_resource type="Texture2D" uid="uid://ddfykugbxeali" path="res://textures/topdownpack-Sheet2.png" id="4_fjrip"]
 [ext_resource type="PackedScene" uid="uid://hi7dswjmjldp" path="res://scenes/gun_manager.tscn" id="4_tuyoq"]
 [ext_resource type="AudioStream" uid="uid://ccb28cg4fvmn1" path="res://sounds/Single Shot Reload Full MP3.mp3" id="5_qlg0r"]
 
@@ -40,6 +41,26 @@ region = Rect2(32, 16, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
 atlas = ExtResource("3_qhqgy")
 region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
+atlas = ExtResource("4_fjrip")
+region = Rect2(440, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
+atlas = ExtResource("4_fjrip")
+region = Rect2(460, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
+atlas = ExtResource("4_fjrip")
+region = Rect2(480, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
+atlas = ExtResource("4_fjrip")
+region = Rect2(500, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1ej7"]
+atlas = ExtResource("4_fjrip")
+region = Rect2(520, 0, 20, 20)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_g4v7s"]
 animations = [{
@@ -87,6 +108,35 @@ animations = [{
 "loop": 1,
 "name": &"walking",
 "speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2wvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v2ag")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2wvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jej6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1ej7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jej6c")
+}],
+"loop": 1,
+"name": &"walkingshotgun",
+"speed": 20.0
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=2018137029 node_paths=PackedStringArray("hud")]
@@ -120,10 +170,8 @@ wait_time = 0.1
 position = Vector2(4, 0)
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
-animation = &"walking"
+animation = &"walkingshotgun"
 autoplay = "idle"
-frame = 6
-frame_progress = 0.87608695
 
 [node name="GunManager" parent="body" unique_id=1756750752 instance=ExtResource("4_tuyoq")]
 
