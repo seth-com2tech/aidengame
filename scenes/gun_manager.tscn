@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://hi7dswjmjldp"]
+
+[ext_resource type="Script" uid="uid://ckx5fv2gvdtep" path="res://scenes/gun_manager.gd" id="1_l2god"]
+[ext_resource type="Script" uid="uid://b1ahoxsde7otp" path="res://scenes/pistol.gd" id="2_413e3"]
+
+[node name="GunManager" type="Node2D" unique_id=1756750752]
+script = ExtResource("1_l2god")
+
+[node name="unarmed" type="Node2D" parent="." unique_id=351066179]
+position = Vector2(7.999999, 0)
+scale = Vector2(15.999999, 15.999999)
+
+[node name="pistol" type="Node2D" parent="." unique_id=1973596322]
+position = Vector2(7.999999, 0)
+scale = Vector2(15.999999, 15.999999)
+script = ExtResource("2_413e3")
+
+[node name="shotgun" type="Node2D" parent="." unique_id=366359033]
+position = Vector2(7.999999, 0)
+scale = Vector2(15.999999, 15.999999)
+
+[node name="smg" type="Node2D" parent="." unique_id=1623834052]
+position = Vector2(7.999999, 0)
+scale = Vector2(15.999999, 15.999999)

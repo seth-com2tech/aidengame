@@ -12,7 +12,7 @@ var maxammo: int = 20
 const SPEED: float = 500.0
 
 @onready var playeranim=$body
-@onready var gun=$body/barrel
+@onready var gun=$body/GunManager/pistol
 @onready var gunshot = $gunshot
 @onready var reloadsound = $reloadsound
 @export var hud: hudUI

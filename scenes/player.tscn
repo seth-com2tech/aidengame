@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cfwnkp6h2242b" path="res://scenes/hud.tscn" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://dy0ds7f4a5ya7" path="res://textures/topdownpack.png" id="3_qhqgy"]
 [ext_resource type="AudioStream" uid="uid://b74mrnu2qrs1m" path="res://sounds/22LR Single Isolated MP3.mp3" id="4_dqkch"]
+[ext_resource type="PackedScene" uid="uid://hi7dswjmjldp" path="res://scenes/gun_manager.tscn" id="4_tuyoq"]
 [ext_resource type="AudioStream" uid="uid://ccb28cg4fvmn1" path="res://sounds/Single Shot Reload Full MP3.mp3" id="5_qlg0r"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ix85q"]
@@ -124,9 +125,7 @@ autoplay = "idle"
 frame = 6
 frame_progress = 0.87608695
 
-[node name="barrel" type="Node2D" parent="body" unique_id=158785234]
-position = Vector2(7.999999, 0)
-scale = Vector2(15.999999, 15.999999)
+[node name="GunManager" parent="body" unique_id=1756750752 instance=ExtResource("4_tuyoq")]
 
 [node name="reload" type="Timer" parent="." unique_id=415269217]
 wait_time = 2.0
@@ -143,3 +142,5 @@ volume_db = 24.0
 [connection signal="body_entered" from="hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="timeout" from="shootdelay" to="." method="_on_shootdelay_timeout"]
 [connection signal="timeout" from="reload" to="." method="_on_reload_timeout"]
+
+[editable path="body/GunManager"]

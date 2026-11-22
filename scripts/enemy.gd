@@ -42,6 +42,7 @@ func state_update(newstate):
 	
 	debugPos.text = str(nav_agent.target_position)
 	debugState.text = state
+	debugPos.rotation = -get_parent().global_rotation
 	print(state)
 	if state == "dead":
 		speed = 0
