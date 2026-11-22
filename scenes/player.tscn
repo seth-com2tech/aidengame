@@ -122,8 +122,6 @@ scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_g4v7s")
 animation = &"walking"
 autoplay = "idle"
-frame = 6
-frame_progress = 0.87608695
 
 [node name="GunManager" parent="body" unique_id=1756750752 instance=ExtResource("4_tuyoq")]
 
