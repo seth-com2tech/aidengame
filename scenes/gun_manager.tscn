@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://hi7dswjmjldp"]
 
-[ext_resource type="Script" uid="uid://ckx5fv2gvdtep" path="res://scenes/gun_manager.gd" id="1_l2god"]
-[ext_resource type="Script" uid="uid://b1ahoxsde7otp" path="res://scenes/pistol.gd" id="2_413e3"]
+[ext_resource type="Script" uid="uid://ckx5fv2gvdtep" path="res://scripts/gun_manager.gd" id="1_l2god"]
+[ext_resource type="Script" uid="uid://b1ahoxsde7otp" path="res://scripts/pistol.gd" id="2_413e3"]
 
 [node name="GunManager" type="Node2D" unique_id=1756750752]
 script = ExtResource("1_l2god")
