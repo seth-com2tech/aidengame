@@ -11,8 +11,13 @@ var currentammo: int = 20
 var maxammo: int = 20
 const SPEED: float = 500.0
 
-@onready var playeranim=$body
-@onready var gun=$body/GunManager/pistol
+var currentwalk: String = "fistwalk"
+var currentidle: String = "fistidle"
+
+@onready var bodyanim=$body
+@onready var legsanim=$legs
+
+@onready var gun=$body/gun
 @onready var gunshot = $gunshot
 @onready var reloadsound = $reloadsound
 @export var hud: hudUI
@@ -20,22 +25,22 @@ const SPEED: float = 500.0
 func _ready() -> void:
 	hud.update_ammo_count(currentammo, maxammo)
 	hud.show()
-	
-func _process(delta):
-	if dead==false:
-		look_at(get_global_mouse_position())
 
 func _physics_process(delta):
+	if dead==false:
+		look_at(get_global_mouse_position())
 	if dead==false:
 		var move_dir = Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down"))
 		
 		if move_dir != Vector2.ZERO:
 			velocity = SPEED * move_dir.normalized()
-			playeranim.play("walking")
+			legsanim.play("walking")
+			bodyanim.play(currentwalk)
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 			velocity.y = move_toward(velocity.y, 0, SPEED)
-			playeranim.play("idle")
+			legsanim.play("idle")
+			bodyanim.play(currentidle)
 		
 		#gun
 		if Input.is_action_pressed("shoot") && !delaying && !reloading && currentammo > 0:
@@ -61,7 +66,7 @@ func _on_hitbox_body_entered(body):
 	if body is Enemy:
 		var enemy = body
 		if enemy.state != "dead":
-			playeranim.play("dead")
+			legsanim.play("dead")
 			dead = true
 			died.emit()
 			z_index -= 1

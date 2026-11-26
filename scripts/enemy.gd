@@ -5,18 +5,18 @@ var player: Player = null
 
 const CHASESPEED: float = 200.0
 const ROAMSPEED: float = 100.0
-# ADDED: roaming tuning values, change these to taste
-const ROAM_RADIUS: float = 400.0    # ADDED: furthest an enemy will wander from its spawn point
-const ROAM_MIN_DIST: float = 100.0  # ADDED: stops it picking a spot right on top of where it already is
-const ROAM_WAIT_MIN: float = 1.0    # ADDED: shortest idle pause (seconds) at each roam point
-const ROAM_WAIT_MAX: float = 3.0    # ADDED: longest idle pause (seconds) at each roam point
+
+const ROAM_RADIUS: float = 400.0
+const ROAM_MIN_DIST: float = 100.0
+const ROAM_WAIT_MIN: float = 1.0
+const ROAM_WAIT_MAX: float = 3.0
 var speed : float
 var direction := Vector2.ZERO
 var startpos : Vector2
-var lastpos : Vector2              # ADDED: where we were at the last stuck check (the member variable that was missing before)
-var navready : bool = false        # ADDED: false until the navigation map has synced, so we don't path too early
-var waiting : bool = false          # ADDED: true while standing idle at a roam point
-var roamwait : float = 0.0         # ADDED: seconds left to idle before picking the next roam point
+var lastpos : Vector2
+var navready : bool = false
+var waiting : bool = false
+var roamwait : float = 0.0
 
 var debugPos = Label.new()
 var debugState = Label.new()
@@ -25,10 +25,9 @@ var debugState = Label.new()
 
 @onready var check := $Check 
 @onready var nav_agent := $NavigationAgent2D
-@onready var enemy=$enemy
+@onready var bodyanim=$body
+@onready var legsanim=$legs
 @onready var hitbox=$hitbox
-#@onready var debugPos=$dbgTargetPos
-#@onready var debugState=$dbgState
 
 
 
@@ -62,7 +61,7 @@ func state_update(newstate):
 	if state == "dead":
 		speed = 0
 		dead = true
-		enemy.play("death")
+		legsanim.play("dead")
 		z_index -= 1
 		$CollisionShape2D.queue_free()
 		
@@ -100,12 +99,12 @@ func _physics_process(delta):
 		var direction = global_position.direction_to(next_path)
 		velocity =  direction * speed
 		if velocity.length() > 0.1:
-			enemy.look_at(next_path)
-			enemy.play("walking")
+			self.look_at(next_path)
+			legsanim.play("walking")
 		
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, speed)
-		enemy.play("idle")
+		legsanim.play("idle")
 		
 		if state == "chasing" and not player:
 			state_update("roaming")

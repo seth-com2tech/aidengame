@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddfykugbxeali"
-path="res://.godot/imported/topdownpack-Sheet2.png-22e8a7811b6af3ede596ee11b6a76ee9.ctex"
+uid="uid://cfiakqsbnggys"
+path="res://.godot/imported/CharactersSpritesheetSeperated.png-8930c6e7b0e0589ba0b85938b01c4c38.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/topdownpack-Sheet2.png"
-dest_files=["res://.godot/imported/topdownpack-Sheet2.png-22e8a7811b6af3ede596ee11b6a76ee9.ctex"]
+source_file="res://textures/CharactersSpritesheetSeperated.png"
+dest_files=["res://.godot/imported/CharactersSpritesheetSeperated.png-8930c6e7b0e0589ba0b85938b01c4c38.ctex"]
 
 [params]
 
