@@ -5,9 +5,18 @@ var player: Player = null
 
 const CHASESPEED: float = 200.0
 const ROAMSPEED: float = 100.0
+# ADDED: roaming tuning values, change these to taste
+const ROAM_RADIUS: float = 400.0    # ADDED: furthest an enemy will wander from its spawn point
+const ROAM_MIN_DIST: float = 100.0  # ADDED: stops it picking a spot right on top of where it already is
+const ROAM_WAIT_MIN: float = 1.0    # ADDED: shortest idle pause (seconds) at each roam point
+const ROAM_WAIT_MAX: float = 3.0    # ADDED: longest idle pause (seconds) at each roam point
 var speed : float
 var direction := Vector2.ZERO
 var startpos : Vector2
+var lastpos : Vector2              # ADDED: where we were at the last stuck check (the member variable that was missing before)
+var navready : bool = false        # ADDED: false until the navigation map has synced, so we don't path too early
+var waiting : bool = false          # ADDED: true while standing idle at a roam point
+var roamwait : float = 0.0         # ADDED: seconds left to idle before picking the next roam point
 
 var debugPos = Label.new()
 var debugState = Label.new()
@@ -24,8 +33,14 @@ var debugState = Label.new()
 
 
 func _ready() -> void:
-	await get_tree().process_frame
+	$CheckTimer.wait_time = 0.2 
+	$StuckTimer.wait_time = 1.0
+
+	await get_tree().physics_frame
+	await get_tree().physics_frame
 	startpos = global_position
+	lastpos = global_position
+	navready = true
 	state_update("roaming")
 	
 	debugPos.position = Vector2(-40,-40)
@@ -35,7 +50,7 @@ func _ready() -> void:
 	
 	if player:
 		nav_agent.target_position = player.global_position
-	
+	$StuckTimer.start()
 
 func state_update(newstate):
 	state = newstate
@@ -52,20 +67,35 @@ func state_update(newstate):
 		$CollisionShape2D.queue_free()
 		
 	if state == "chasing":
-		nav_agent.path_postprocessing = NavigationPathQueryParameters2D.PATH_POSTPROCESSING_CORRIDORFUNNEL
 		speed = CHASESPEED
+		waiting = false
 		nav_agent.target_position = player.global_position
 		
 	if state == "roaming":
-		nav_agent.path_postprocessing = NavigationPathQueryParameters2D.PATH_POSTPROCESSING_EDGECENTERED
 		speed = ROAMSPEED
-		nav_agent.target_position = startpos
+		waiting = false
+		pick_roam_target()
+
+func pick_roam_target() -> void:
+	var map: RID = nav_agent.get_navigation_map()
+	for i in 8:
+		var offset: Vector2 = Vector2.from_angle(randf() * TAU) * randf_range(ROAM_MIN_DIST, ROAM_RADIUS)
+		var point: Vector2 = NavigationServer2D.map_get_closest_point(map, startpos + offset)
+		var path: PackedVector2Array = NavigationServer2D.map_get_path(map, global_position, point, true)
+		if path.size() > 1 and path[path.size() - 1].distance_to(point) < 10.0:
+			nav_agent.target_position = point
+			debugPos.text = str(nav_agent.target_position)
+			return
+	nav_agent.target_position = global_position
 
 #process of updating movement and pathfinding
 func _physics_process(delta):
 	if state == "dead":
 		return
+	if not navready:
+		return
 	if !nav_agent.is_navigation_finished():
+		waiting = false
 		var next_path = nav_agent.get_next_path_position()
 		var direction = global_position.direction_to(next_path)
 		velocity =  direction * speed
@@ -77,9 +107,17 @@ func _physics_process(delta):
 		velocity = velocity.move_toward(Vector2.ZERO, speed)
 		enemy.play("idle")
 		
-		if not player:
+		if state == "chasing" and not player:
 			state_update("roaming")
-				
+		elif state == "roaming":
+			if not waiting:
+				waiting = true
+				roamwait = randf_range(ROAM_WAIT_MIN, ROAM_WAIT_MAX)
+			else:
+				roamwait -= delta
+				if roamwait <= 0.0:
+					waiting = false
+					pick_roam_target() 
 	move_and_slide()
 
 
@@ -105,18 +143,27 @@ func _on_hitbox_area_entered(area: Area2D) -> void:
 
 
 func _on_timer_timeout() -> void:
-	if state != "dead":
+	if state != "dead" and navready:
 		if player:
 			check.look_at(player.global_position)
-			if (check.is_colliding() && check.get_collider()==player) && nav_agent.target_position != player.global_position:
-				state_update("chasing")
-			
+			check.force_raycast_update()
+			if check.is_colliding() && check.get_collider()==player:
+				if state != "chasing":
+					state_update("chasing")
+				else:
+					nav_agent.target_position = player.global_position
+					debugPos.text = str(nav_agent.target_position)
+				
 			$CheckTimer.start()
-			$StuckTimer.start()
 
 
 func _on_stuck_timer_timeout() -> void:
-	var lastpos= position
-	if state != "dead":
-		if position == lastpos:
-			state_update("roaming")
+	if state == "dead" or not navready:
+		return
+	var moved: float = global_position.distance_to(lastpos)
+	lastpos = global_position
+	if moved < 5.0 and not nav_agent.is_navigation_finished():
+		if state == "roaming":
+			pick_roam_target()
+		elif state == "chasing" and player:
+			nav_agent.target_position = player.global_position
