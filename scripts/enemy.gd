@@ -42,10 +42,10 @@ func _ready() -> void:
 	navready = true
 	state_update("roaming")
 	
-	debugPos.position = Vector2(-40,-40)
-	add_child(debugPos)
-	debugState.position = Vector2(-30,30)
-	add_child(debugState)
+	#debugPos.position = Vector2(-40,-40)
+	#add_child(debugPos)
+	#debugState.position = Vector2(-30,30)
+	#add_child(debugState)
 	
 	if player:
 		nav_agent.target_position = player.global_position
@@ -62,6 +62,7 @@ func state_update(newstate):
 		speed = 0
 		dead = true
 		legsanim.play("dead")
+		bodyanim.hide()
 		z_index -= 1
 		$CollisionShape2D.queue_free()
 		

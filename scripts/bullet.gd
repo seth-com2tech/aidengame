@@ -7,7 +7,6 @@ const SPEED = 30
 
 func _physics_process(delta: float) -> void:
 	global_position+=direction*SPEED
-	scale *=0.99
 
 
 func _on_timer_timeout() -> void:
